@@ -1,11 +1,75 @@
-﻿@inherits LayoutComponentBase
+﻿@using FlyoBlazor2.Services
+@inject IJSRuntime JS
+@inherits LayoutComponentBase
 
+
+
+<div class="@(themeState.IsDark ? "dark" : "")">
 <div class="font-opensans dark:bg-darkBlue dark:text-white">
-    <Header/>
-    <main class="flex-1">
-        @Body
-    </main>
-    <Footer/>
+    <CascadingValue Value="themeState" IsFixed="true">
+        <Header/>
+        <main class="flex-1">
+            @Body
+        </main>
+        <Footer/>
+    </CascadingValue>
+</div>
 </div>
 
+@code {
+    private readonly ThemeState themeState = new ThemeState();
+
+
+    protected override void OnInitialized()
+    {
+        // Wire toggle early so Header clicks work even if JS interop fails later
+        themeState.Toggle = ToggleThemeAsync;
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        try
+        {
+            // Read stored preference; use window.localStorage to avoid eval where possible
+            string theme = await JS.InvokeAsync<string>("window.localStorage.getItem", "color-theme");
+
+            if (string.IsNullOrEmpty(theme))
+            {
+                // fall back to system preference
+                bool prefersDark = await JS.InvokeAsync<bool>("eval", "window.matchMedia('(prefers-color-scheme: dark)').matches");
+                themeState.IsDark = prefersDark;
+            }
+            else
+            {
+                themeState.IsDark = theme == "dark";
+            }
+        }
+        catch
+        {
+            // If JS interop fails, keep a safe default
+            themeState.IsDark = false;
+        }
+        StateHasChanged();
+    }
+
+    private async Task ToggleThemeAsync()
+    {
+        themeState.IsDark = !themeState.IsDark;
+
+        try
+        {
+            await JS.InvokeVoidAsync("window.localStorage.setItem", "color-theme", themeState.IsDark ? "dark" : "light");
+        }
+        catch
+        {
+            // ignore storage failures
+        }
+
+        StateHasChanged();
+    }
+    
+}
 

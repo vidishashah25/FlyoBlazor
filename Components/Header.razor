@@ -1,6 +1,12 @@
-﻿<header class="container mx-auto h-40 px-6 pt-10 text-center md:h-20">
+﻿@using FlyoBlazor2.Services
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+
+<header class="container mx-auto h-40 px-6 pt-10 text-center md:h-20">
     <!-- Dynamic Logo -->
     <div class="bg-logo-light-mode left-10 top-10 mx-auto h-20 w-48 bg-no-repeat dark:bg-logo-dark-mode md:absolute md:mx-0"></div>
+    
+
     <!-- Menu -->
     <div class="right-10 top-12 flex items-center justify-center space-x-4 md:absolute md:space-x-10">
         <a href="#features" class="hover:text-accentCyan">Features</a>
@@ -8,10 +14,13 @@
 
         <!-- Dark/Light Mode Button -->
         <button id="theme-toggle"
-                class="rounded-lg p-2.5 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                aria-label="Toggle theme"
+                type="button"
+                class="rounded-lg p-2.5 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                @onclick="OnToggleClicked">
             <!-- Dark SVG Icon -->
             <svg id="theme-toggle-dark-icon"
-                 class="hidden h-5 w-5"
+                 class="h-5 w-5 @(Theme?.IsDark == true ? "hidden" : "")"
                  fill="currentColor"
                  viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +28,7 @@
             </svg>
             <!-- Light SVG Icon -->
             <svg id="theme-toggle-light-icon"
-                 class="hidden h-5 w-5"
+                 class="h-5 w-5 @(Theme?.IsDark == true ? "" : "hidden")"
                  fill="currentColor"
                  viewBox="0 0 20 20"
                  xmlns="http://www.w3.org/2000/svg">
@@ -30,3 +39,23 @@
         </button>
     </div>
 </header>
+
+@code {
+    [CascadingParameter] public ThemeState? Theme { get; set; }
+
+    private async Task OnToggleClicked()
+    {
+        // Debug log so you can see click reached Blazor
+        await JS.InvokeVoidAsync("console.log", "Header.OnToggleClicked - Theme present: " + (Theme != null));
+
+        if (Theme?.Toggle is not null)
+        {
+            await Theme.Toggle.Invoke();
+            await JS.InvokeVoidAsync("console.log", "Header.OnToggleClicked - Toggle invoked, new IsDark: " + Theme.IsDark);
+        }
+        else
+        {
+            await JS.InvokeVoidAsync("console.log", "Header.OnToggleClicked - Theme.Toggle is null");
+        }
+    }
+}

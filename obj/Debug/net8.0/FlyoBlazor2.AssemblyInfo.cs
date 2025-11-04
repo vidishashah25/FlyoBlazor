@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FlyoBlazor2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac19501ae31bc77a0621b11a50e7c374eaf02453")]
 [assembly: System.Reflection.AssemblyProductAttribute("FlyoBlazor2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FlyoBlazor2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

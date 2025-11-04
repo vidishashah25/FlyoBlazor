@@ -31,3 +31,8 @@ D:\Vidisha\Blazor\FlyoBlazor2\FlyoBlazor2\obj\Debug\net8.0\refint\FlyoBlazor2.dl
 D:\Vidisha\Blazor\FlyoBlazor2\FlyoBlazor2\obj\Debug\net8.0\FlyoBlazor2.pdb
 D:\Vidisha\Blazor\FlyoBlazor2\FlyoBlazor2\obj\Debug\net8.0\FlyoBlazor2.genruntimeconfig.cache
 D:\Vidisha\Blazor\FlyoBlazor2\FlyoBlazor2\obj\Debug\net8.0\ref\FlyoBlazor2.dll
+D:\Vidisha\Blazor\FlyoBlazor2\FlyoBlazor2\bin\Debug\net8.0\tailwind.extension.json
+D:\Vidisha\Blazor\FlyoBlazor2\FlyoBlazor2\bin\Debug\net8.0\Blazored.LocalStorage.dll
+D:\Vidisha\Blazor\FlyoBlazor2\FlyoBlazor2\obj\Debug\net8.0\FlyoBlazor2.csproj.AssemblyReference.cache
+D:\Vidisha\Blazor\FlyoBlazor2\FlyoBlazor2\obj\Debug\net8.0\FlyoBlazor2.sourcelink.json
+D:\Vidisha\Blazor\FlyoBlazor2\FlyoBlazor2\obj\Debug\net8.0\FlyoBlaz.5DD5C1C7.Up2Date
