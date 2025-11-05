@@ -3,10 +3,9 @@
 @inherits LayoutComponentBase
 
 
-
 <div class="@(themeState.IsDark ? "dark" : "")">
 <div class="font-opensans dark:bg-darkBlue dark:text-white">
-    <CascadingValue Value="themeState" IsFixed="true">
+    <CascadingValue Value="themeState">
         <Header/>
         <main class="flex-1">
             @Body
@@ -27,47 +26,10 @@
     }
 
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (!firstRender) return;
-
-        try
-        {
-            // Read stored preference; use window.localStorage to avoid eval where possible
-            string theme = await JS.InvokeAsync<string>("window.localStorage.getItem", "color-theme");
-
-            if (string.IsNullOrEmpty(theme))
-            {
-                // fall back to system preference
-                bool prefersDark = await JS.InvokeAsync<bool>("eval", "window.matchMedia('(prefers-color-scheme: dark)').matches");
-                themeState.IsDark = prefersDark;
-            }
-            else
-            {
-                themeState.IsDark = theme == "dark";
-            }
-        }
-        catch
-        {
-            // If JS interop fails, keep a safe default
-            themeState.IsDark = false;
-        }
-        StateHasChanged();
-    }
-
     private async Task ToggleThemeAsync()
     {
         themeState.IsDark = !themeState.IsDark;
-
-        try
-        {
-            await JS.InvokeVoidAsync("window.localStorage.setItem", "color-theme", themeState.IsDark ? "dark" : "light");
-        }
-        catch
-        {
-            // ignore storage failures
-        }
-
+        await JS.InvokeVoidAsync("window.localStorage.setItem", "color-theme", themeState.IsDark ? "dark" : "light");
         StateHasChanged();
     }
     

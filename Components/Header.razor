@@ -2,7 +2,8 @@
 @inject IJSRuntime JS
 @rendermode InteractiveServer
 
-<header class="container mx-auto h-40 px-6 pt-10 text-center md:h-20">
+<header class="container mx-auto h-40 px-6 text-center md:h-20" style="
+    padding-top: 20px;">
     <!-- Dynamic Logo -->
     <div class="bg-logo-light-mode left-10 top-10 mx-auto h-20 w-48 bg-no-repeat dark:bg-logo-dark-mode md:absolute md:mx-0"></div>
     
@@ -45,7 +46,7 @@
 
     private async Task OnToggleClicked()
     {
-        // Debug log so you can see click reached Blazor
+        // Debug log 
         await JS.InvokeVoidAsync("console.log", "Header.OnToggleClicked - Theme present: " + (Theme != null));
 
         if (Theme?.Toggle is not null)
